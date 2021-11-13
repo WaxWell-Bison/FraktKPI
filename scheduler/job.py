@@ -31,10 +31,6 @@ head = {
 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36',
 }
 
-@lru_cache
-def get_sol_price():
-    return f_client.get_price_pair('SOL/USDT')
-
 def get_pool_data():
     for pair in requests.get('https://api.raydium.io/pairs').json():
         if pair.get("name","") == "FRKT-SOL" and pair.get("market","") == "FE5nRChviHFXnUDPRpPwHcPoQSxXwjAB5gdPFJLweEYK":
@@ -44,7 +40,7 @@ def get_pool_data():
                 'sol': pair['token_amount_pc'],
                 'lp': pair['token_amount_lp'],
                 'h24_volume': pair['volume_24h'],
-                'price': pair['price'] * get_sol_price(),
+                'price': pair['price'] * f_client.get_price_pair('SOL/USDT'),
                 'apy': pair['apy']
             }
 
@@ -81,7 +77,6 @@ def get_fraktion_data():
 
 def populate(sig=None,stack=None):
     data = {'pool':{}, 'supply':{}, 'market': {}, 'nft': {}, 'fraktion':{}, 'timestamp': datetime.now()}
-    sol_price = get_sol_price()
 
     data['pool'] = get_pool_data()
     data['supply'] = get_supply_data()
