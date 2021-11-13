@@ -21,7 +21,7 @@ team_wallet = [
     ]
 
 burn_wallet = "1nc1nerator11111111111111111111111111111111"
-
+fusion_pool = "FE5nRChviHFXnUDPRpPwHcPoQSxXwjAB5gdPFJLweEYK"
 token_address = 'ErGB9xa24Szxbk1M28u2Tx8rKPqzL6BroNkkzk5rG4zj'
 
 f_client = Client(os.environ['FTX_KEY'], os.environ['FTX_SECRET'])
@@ -33,7 +33,7 @@ head = {
 
 def get_pool_data():
     for pair in requests.get('https://api.raydium.io/pairs').json():
-        if pair.get("name","") == "FRKT-SOL" and pair.get("market","") == "FE5nRChviHFXnUDPRpPwHcPoQSxXwjAB5gdPFJLweEYK":
+        if pair.get("name","") == "FRKT-SOL" and pair.get("market","") == fusion_pool:
             return {
                 'liquidity': pair['liquidity'],
                 'frkt': pair['token_amount_coin'],
@@ -62,7 +62,7 @@ def get_supply_data():
     }
 
 def get_holders_data():
-    return requests.get("https://api.solscan.io/token/meta?token=ErGB9xa24Szxbk1M28u2Tx8rKPqzL6BroNkkzk5rG4zj", headers=head).json()['data']['holder']
+    return requests.get(f"https://api.solscan.io/token/meta?token={token_address}", headers=head).json()['data']['holder']
 
 def get_nft_data():
     data = requests.get("http://frakt-stats.herokuapp.com/staking").json()
