@@ -57,6 +57,7 @@ def get_supply_data():
             burned_supply = float(holder['amount']) / math.pow(10,int(holder['decimals']))
 
     return {
+        'burned': burned_supply,
         'total': tech_supply - burned_supply,
         'circulating': tech_supply - burned_supply - team_supply
     }
