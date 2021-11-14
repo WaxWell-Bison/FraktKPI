@@ -12,6 +12,8 @@ services:
     depends_on:
       - mongo
     restart: unless-stopped
+    networks:
+      - main
   api:
     container_name: api
     build: api
@@ -23,6 +25,8 @@ services:
     ports:
       - 0.0.0.0:80:8080
     restart: unless-stopped
+    networks:
+      - main
   mongo-express:
     container_name: mongo-express
     image: mongo-express
@@ -35,6 +39,8 @@ services:
     depends_on:
       - mongo
     restart: unless-stopped
+    networks:
+      - main
   mongo:
     container_name: mongo
     image: mongo
@@ -44,5 +50,10 @@ services:
     volumes:
       - ./mongo-data:/data/db
     restart: unless-stopped
+    networks:
+      - main
 
-  
+networks:
+  main:
+    external:
+      name: main

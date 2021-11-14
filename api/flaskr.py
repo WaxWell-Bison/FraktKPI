@@ -14,6 +14,9 @@ def create_app():
 
     db = MongoClient('mongo', 27017, username=os.environ['MONGO_USER'], password=os.environ['MONGO_PASSWORD']).db
 
+    def get_most_recent():
+        return db.stats.find().sort([('timestamp', -1)]).limit(1)[0]
+
     @app.route("/")
     def home():
         start = request.args.get('start', isodate.datetime_isoformat(datetime.datetime.today() - datetime.timedelta(days=7)))
@@ -26,4 +29,13 @@ def create_app():
         result = db.stats.find(filter)
         return json.dumps([r for r in result], default=str)
     
+    @app.route("/circulating-supply")
+    def circulating_supply():
+        return str(get_most_recent()['supply']['circulating'])
+    
+    @app.route("/total-supply")
+    def total_supply():
+        return str(get_most_recent()['supply']['total'])
+
+
     return app
