@@ -22,8 +22,6 @@ services:
       MONGO_PASSWORD: ${MONGO_PASSWORD}
     depends_on:
       - mongo
-    ports:
-      - 0.0.0.0:80:8080
     restart: unless-stopped
     networks:
       - main
