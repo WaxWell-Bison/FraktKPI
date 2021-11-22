@@ -67,7 +67,7 @@ def create_app():
 
     @app.route("/")
     def home():
-        start = request.args.get('start', isodate.datetime_isoformat(datetime.datetime.today() - datetime.timedelta(days=7)))
+        start = request.args.get('start', isodate.datetime_isoformat(datetime.datetime.today() - datetime.timedelta(days=10)))
         end = request.args.get('end', None)
         group = request.args.get('group', None)
         match = {'$match': {}}
