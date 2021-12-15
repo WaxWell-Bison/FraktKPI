@@ -79,7 +79,7 @@ def get_stakers_data():
     data = requests.get("https://frakt-stats.herokuapp.com/frkt-staking").json()
     return {
         'stakers': data['stakedWalletsCount'],
-        'stacked': data['stakedFRKT']
+        'staked': data['stakedFRKT']
     }
 
 def populate(sig=None,stack=None):
