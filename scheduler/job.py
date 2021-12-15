@@ -75,9 +75,15 @@ def get_nft_data():
 def get_fraktion_data():
     return requests.get("http://frakt-stats.herokuapp.com/fraktion").json()
 
+def get_stakers_data():
+    data = requests.get("https://frakt-stats.herokuapp.com/frkt-staking").json()
+    return {
+        'stakers': data['stakedWalletsCount'],
+        'stacked': data['stakedFRKT']
+    }
 
 def populate(sig=None,stack=None):
-    data = {'pool':{}, 'supply':{}, 'market': {}, 'nft': {}, 'fraktion':{}, 'timestamp': datetime.now()}
+    data = {'pool':{}, 'supply':{}, 'market': {}, 'nft': {}, 'fraktion':{}, 'frkt': {}, 'timestamp': datetime.now()}
 
     data['pool'] = get_pool_data()
     data['supply'] = get_supply_data()
@@ -88,6 +94,7 @@ def populate(sig=None,stack=None):
 
     data['nft'] = get_nft_data()
     data['fraktion'] = get_fraktion_data()
+    data['frkt'] = get_stakers_data()
 
     db.stats.insert_one(data)
 
