@@ -102,7 +102,8 @@ def populate(sig=None,stack=None):
 
     print(f"{data}",flush=True)
 
-signal.signal(signal.SIGALRM, populate)
-signal.setitimer(signal.ITIMER_REAL, 1, 60)
-while True:
-    signal.pause()
+if __name__ == "__main__":
+    signal.signal(signal.SIGALRM, populate)
+    signal.setitimer(signal.ITIMER_REAL, 1, 60)
+    while True:
+        signal.pause()
