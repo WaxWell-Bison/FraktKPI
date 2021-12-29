@@ -1,9 +1,6 @@
-from functools import lru_cache
-from datetime import date, datetime
-
+from datetime import datetime
 from pymongo import MongoClient
 
-import json
 import requests
 import math
 import os
